@@ -1,0 +1,95 @@
+.container {
+    max-width: 960px;
+    /* Adjust for desired container width */
+    margin: 0 auto;
+    /* Centers the container horizontally */
+    padding: 2rem;
+    /* Adds padding for spacing */
+}
+
+.h1 {
+    text-align: center;
+    /* Centers the heading text */
+    font-size: 2rem;
+    /* Adjust heading font size */
+    margin-bottom: 1rem;
+    /* Adds space below the heading */
+}
+
+.row {
+    display: flex;
+    /* Arranges cards in a row */
+    flex-wrap: wrap;
+    /* Allows cards to wrap to the next line on smaller screens */
+    justify-content: space-between;
+    /* Spaces cards evenly across the container */
+}
+
+.col-md-4 {
+    flex: 0 0 33.33%;
+    /* Sets card width to 33.33% (adjust for grid layout) */
+    padding: 1rem;
+    /* Adds spacing around cards */
+}
+
+.pharmacy-card {
+    background-color: #fff;
+    /* Set card background color */
+    border: 1px solid #ddd;
+    /* Adds a thin border */
+    border-radius: 5px;
+    /* Rounds card corners */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* Adds subtle shadow */
+    transition: all 0.2s ease-in-out;
+    /* Enables smooth hover transitions */
+}
+
+.pharmacy-card:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    /* Adds slight elevation on hover */
+    transform: translateY(-2px);
+    /* Creates a subtle lift on hover */
+}
+
+.card-body {
+    padding: 1.5rem;
+    /* Adjust content padding within the card */
+}
+
+.card-title {
+    font-size: 1.2rem;
+    /* Adjust card title font size */
+    font-weight: bold;
+    /* Makes title text bolder */
+    margin-bottom: 1rem;
+    /* Adds space below the title */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    /* Set primary button background color */
+    color: #fff;
+    /* Set button text color */
+    border-color: #007bff;
+    /* Set button border color */
+    padding: 0.75rem 1.5rem;
+    /* Adjust button padding */
+    border-radius: 5px;
+    /* Round button corners */
+    transition: all 0.2s ease-in-out;
+    /* Enables smooth button hover transitions */
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    /* Change button color on hover */
+    border-color: #0062cc;
+    /* Change button border color on hover */
+}
+.active a {
+    background-color: #eee;
+    /* Light background for active link */
+    font-weight: bolder;
+    /* Bold text for active link */
+}

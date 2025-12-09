@@ -1,0 +1,33 @@
+.pharmacy-nav-container {
+    margin-bottom: 2rem;
+  }
+  
+  .pharmacy-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .pharmacy-nav-item {
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    background-color: #f0f4f8;
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+  
+  .pharmacy-nav-item:hover {
+    background-color: #e0e8f0;
+    transform: translateY(-2px);
+  }
+  
+  .pharmacy-nav-item.active {
+    background-color: #3498db;
+    color: white;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    border-color: #2980b9;
+  }

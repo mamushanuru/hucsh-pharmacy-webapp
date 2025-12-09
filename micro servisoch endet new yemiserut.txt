@@ -1,0 +1,2 @@
+mejemriay request simeta be routes enkebelalen keziya wede controller enasalfalen controller wede service yastelalfal ke ziya service db confign bemetekem exucute yadergal databaseachin lay
+in short routes>>>controller>>>service db confign tetekmo exucute

@@ -1,0 +1,175 @@
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../../../src/assets/images/hucsh.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.login-form-wrapper {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  max-width: 500px;
+  margin: auto;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-container img {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: blue;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-group label {
+  flex: 0 0 120px;
+  text-align: right;
+}
+
+.form-group input,
+.form-group select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Error handling styling */
+.validation-error {
+  color: rgb(255, 0, 0); /* Error message color */
+  font-weight: bold;
+  margin-top: 60px;
+  margin-left: 95px;
+  font-size: medium;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 5000;
+  text-align: center;
+
+}
+
+.form-group.error input,
+.form-group.error select {
+  border: 1px solid red; /* Red border on invalid input */
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-container img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.login-form button {
+  background-color: hsl(239, 92%, 45%); /* Green */
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+  margin: auto; /* Centered button */
+  width: fit-content; /* Button size adjusts to content */
+}
+
+.login-form button:hover {
+  background-color: #0056b3; /* Darker green on hover */
+}
+
+.existing-account-links {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.existing-account-links p {
+  margin-bottom: 5px;
+}
+
+.existing-account-links a {
+  color: hsl(239, 92%, 45%); /* Green */
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.existing-account-links a:hover {
+  color: #45A049; /* Darker green on hover */
+}
+
+/* Responsiveness using Bootstrap classes */
+
+@media (max-width: 768px) {
+  .login-form-wrapper {
+    padding: 30px 20px;
+  }
+
+  .logo-container img {
+    width: 80px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-form {
+    gap: 10px;
+  }
+
+  .form-group label {
+    flex: none 0 100px;
+  }
+}
+
+h1 {
+  color: blue;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+

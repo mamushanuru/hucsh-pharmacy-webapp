@@ -1,0 +1,134 @@
+/* Responsive layout for cards */
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+}
+
+.card-container {
+    background-color: #F6F6F6;
+    /* Light blue background as requested */
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.banner {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+    /* White text for better contrast */
+    background-color: hsl(210, 100%, 40%);
+    /* Light blue-green background */
+    /* Adjust hue for a different color */
+    padding: 15px 20px;
+    border-radius: 5px 5px 0 0;
+    /* Rounded top corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+    display: flex;
+    /* Allow for content alignment within the banner */
+    align-items: center;
+    /* Center content vertically */
+    justify-content: space-between;
+    /* Distribute content horizontally */
+}
+
+.banner h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top:-57px;
+    flex: 1;
+    color: rgb(255, 255, 255);
+    stroke: black;
+    /* Allow text to grow within available space */
+    
+
+}
+
+.banner img {
+    width: 100px;
+    /* Adjust image width as needed */
+    height: auto;
+    /* Maintain image aspect ratio */
+    flex: 0 0 auto;
+    /* Fix image size and prevent shrinking */
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Responsive grid layout */
+    gap: 60px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    /* Prevent content overflow */
+    position: relative;
+    /* Allow hover effects */
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    /* Indicate clickable behavior */
+}
+
+.card:hover {
+    box-shadow: 0 5px 10px rgba(28, 8, 244, 0.817);
+    transform: translateY(-3px);
+    /* Subtle hover lift */
+}
+
+.card-image-wrapper {
+    position: relative;
+}
+
+.card-image {
+    width: 100%;
+    /* Image covers entire card */
+    height: 250px;
+    /* Adjust image height as needed */
+    object-fit: cover;
+    /* Ensure image fills container */
+    transition: all 0.3s ease-in-out;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+
+    /* background-color: #f8f80ee1; */
+    /* Semi-transparent overlay */
+    opacity: 0;
+    /* Initially hidden */
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover .card-overlay {
+    opacity: 1;
+    /* Reveal overlay on hover */
+}
+
+.card-title {
+    color: #162ff0;
+    /* White text for better readability on overlay */
+    font-size: 38px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.card-text {
+    color: #cc13a1;
+    /* White text for better readability on overlay */
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}

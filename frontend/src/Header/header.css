@@ -1,0 +1,231 @@
+/* General Styles */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #0056b3;
+  --background-color: #fff;
+  --text-color: #333;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: var(--background-color);
+  box-shadow: var(--shadow);
+}
+
+/* Top Header */
+.header-top {
+  background-color: var(--text-color);
+  color: var(--background-color);
+  padding: 10px 0;
+}
+
+.header-top-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header-top-left {
+  display: flex;
+  gap: 20px;
+}
+
+.header-top-text,
+.header-top-hours {
+  font-size: 0.875rem;
+}
+
+.header-top-right .welcome-message {
+  font-size: 0.875rem;
+  color: white;
+}
+
+/* Main Header */
+.header-main {
+  padding: 1rem 0;
+  background-color: var(--background-color);
+}
+
+.header-main-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header-logo img {
+  height: 60px;
+  width: auto;
+}
+
+/* Desktop Navigation */
+.header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.nav-item a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.nav-item a:hover {
+  color: var(--primary-color);
+}
+
+/* Login/Logout Button */
+.header-auth .auth-button {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+}
+
+.header-auth .auth-button:hover {
+  background-color: var(--secondary-color);
+}
+
+.header-auth .auth-button:active {
+  transform: scale(0.95);
+}
+
+/* Mobile Menu Toggler */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.mobile-menu-toggle .toggle-bar {
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-color);
+  transition: var(--transition);
+}
+
+/* Mobile Dropdown Menu */
+.mobile-dropdown {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+.mobile-dropdown.open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.mobile-nav-item {
+  margin: 20px 0;
+}
+
+.mobile-nav-item a {
+  color: var(--background-color);
+  text-decoration: none;
+  font-size: 1.125rem;
+  font-weight: 500;
+  transition: var(--transition);
+  display: inline-block;
+  padding: 8px 16px;
+}
+
+.mobile-nav-item a:hover {
+  color: var(--primary-color);
+}
+
+/* Mobile Menu Buttons - Match Desktop Style */
+.mobile-nav-item .auth-button,
+.mobile-nav-item .auth-button.login,
+.mobile-nav-item .auth-button.logout {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.mobile-nav-item .auth-button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Close Button for Mobile Menu */
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--background-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.close-button:hover {
+  color: var(--primary-color);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .header-nav {
+    display: none;
+  }
+
+  .header-auth {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+}

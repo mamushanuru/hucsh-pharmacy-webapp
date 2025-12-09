@@ -1,0 +1,224 @@
+/* Container styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f0 100%);
+}
+
+/* Title and subtitle */
+.inventory-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.inventory-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  margin-bottom: 2.5rem;
+}
+
+/* Medicine card grid */
+.medicine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Medicine card styling */
+.medicine-card {
+  border: 1px solid #e0e6ed;
+  border-radius: 20px;
+  padding: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+}
+
+.medicine-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Card title */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #34495e;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+}
+
+.medicine-card:hover .card-title {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+/* Highlight search term */
+.highlight {
+  background-color: #ffeb3b; /* Yellow highlight */
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+/* Card dosage */
+.card-dosage {
+  font-size: 0.95rem;
+  color: #5d6d7e;
+  margin: 0.5rem 0;
+}
+
+/* Card category */
+.card-text {
+  font-size: 0.95rem;
+  color: #5d6d7e;
+  margin: 0.5rem 0;
+}
+
+/* Card status */
+.card-status {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.card-status span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.text-success {
+  color: #27ae60 !important;
+}
+
+.text-danger {
+  color: #c0392b !important;
+}
+
+/* Card updated time */
+.card-updated {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin: 0.5rem 0;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form controls styling */
+.form-control {
+  border-radius: 10px;
+  border: 1px solid #d5dce4;
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+  outline: none;
+}
+
+/* Pagination styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.pagination .btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.pagination .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Page overlay styling */
+.page-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(44, 62, 80, 0.9);
+  color: #fff;
+  padding: 2rem 4rem;
+  border-radius: 20px;
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeOut 1s ease forwards;
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .medicine-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .inventory-title {
+    font-size: 2rem;
+  }
+
+  .inventory-subtitle {
+    font-size: 1rem;
+  }
+
+  .form-control {
+    font-size: 0.9rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-dosage,
+  .card-text,
+  .card-status,
+  .card-updated {
+    font-size: 0.9rem;
+  }
+}

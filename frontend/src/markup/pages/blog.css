@@ -1,0 +1,179 @@
+/* blog.css */
+
+.blog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+/* Top Bar with Fixed Button */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Amazing Top-Right Button */
+.availability-button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: #0077ff;
+  color: white;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 38, 255, 0.3);
+}
+
+.availability-button:hover {
+  background-color: #00e1ff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 225, 255, 0.5);
+}
+
+/* Blog Header */
+.blog-header {
+  background-color: #0099FF;
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+  margin-top: 20px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.header-content {
+  flex-basis: 60%;
+}
+
+.header-content h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.header-content p {
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.header-image {
+  flex-basis: 35%;
+}
+
+.header-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.blog-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 80px;
+}
+
+.section-image {
+  flex-basis: 45%;
+}
+
+.section-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.section-content {
+  flex-basis: 50%;
+}
+
+.section-content h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.section-content p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .blog-container {
+    padding: 40px 16px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .availability-button {
+    font-size: 18px;
+    padding: 12px 20px;
+    margin-top: 10px;
+  }
+
+  .blog-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+
+  .header-content {
+    flex-basis: auto;
+    margin-bottom: 24px;
+  }
+
+  .header-content h2 {
+    font-size: 28px;
+  }
+
+  .header-content p {
+    font-size: 18px;
+  }
+
+  .header-image {
+    flex-basis: auto;
+  }
+
+  .blog-section {
+    flex-direction: column;
+    margin-bottom: 60px;
+  }
+
+  .section-image,
+  .section-content {
+    flex-basis: auto;
+  }
+
+  .section-image {
+    margin-bottom: 24px;
+  }
+
+  .section-content h2 {
+    font-size: 28px;
+  }
+
+  .section-content p {
+    font-size: 16px;
+  }
+}
