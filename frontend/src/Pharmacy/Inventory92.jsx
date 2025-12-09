@@ -37,7 +37,7 @@ const highlightSearchTerm = (text, searchTerm) => {
 };
 
 // WebSocket setup
-const socket = io("http://localhost:5000"); // Connect to the backend WebSocket server
+const socket = io("http://localhost:5050"); // Connect to the backend WebSocket server
 
 // Category mapping
 const categoryMap = {
@@ -71,7 +71,7 @@ const Inventory92 = () => {
   useEffect(() => {
     const fetchMedications = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/inventory92/medications");
+        const response = await fetch("http://localhost:5050/api/inventory92/medications");
         if (!response.ok) throw new Error("Failed to fetch medications");
         const { data } = await response.json();
         setMedicines(data); // Set the medications array

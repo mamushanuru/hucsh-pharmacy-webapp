@@ -3,7 +3,7 @@ const mysql = require("mysql2/promise");
 
 const dbConfig = {
   connectionLimit: 10,
-  password: process.env.DB_PASS,
+  password: process.env.DB_PASSWORD,
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,

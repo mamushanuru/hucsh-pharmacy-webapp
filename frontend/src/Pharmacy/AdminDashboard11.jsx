@@ -44,7 +44,7 @@ const highlightSearchTerm = (text, searchTerm) => {
 };
 
 // WebSocket setup
-const socket = io("http://localhost:5000"); // Connect to the backend WebSocket server
+const socket = io("http://localhost:5050"); // Connect to the backend WebSocket server
 
 // Category mapping
 const categoryMap = {
@@ -89,7 +89,7 @@ const AdminDashboard11 = () => {
   useEffect(() => {
     const fetchMedications = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/inventory11/medications");
+        const response = await fetch("http://localhost:5050/api/inventory11/medications");
         if (!response.ok) throw new Error("Failed to fetch medications");
         const { data } = await response.json(); // Destructure the `data` property
         setMedicines(data); // Set the medications array
@@ -141,7 +141,7 @@ const AdminDashboard11 = () => {
         dosage_unit: newMedication.dosage_unit || null, // Set to null if empty
       };
 
-      const response = await fetch("http://localhost:5000/api/inventory11/medications", {
+      const response = await fetch("http://localhost:5050/api/inventory11/medications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(medicationData),
@@ -176,7 +176,7 @@ const AdminDashboard11 = () => {
       };
 
       const response = await fetch(
-        `http://localhost:5000/api/inventory11/medications/${editMedication.medication_id}`,
+        `http://localhost:5050/api/inventory11/medications/${editMedication.medication_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -197,7 +197,7 @@ const AdminDashboard11 = () => {
   // Delete a medication
   const handleDeleteMedication = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/inventory11/medications/${id}`, {
+      const response = await fetch(`http://localhost:5050/api/inventory11/medications/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Failed to delete medication");
