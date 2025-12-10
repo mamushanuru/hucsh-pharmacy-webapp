@@ -1,0 +1,6 @@
+export const ROLES = {
+  MANAGER: 1,
+  PHARMACY11_ADMIN: 2,
+  PHARMACY92_ADMIN: 3,
+  PHARMACY125_ADMIN: 4,
+};

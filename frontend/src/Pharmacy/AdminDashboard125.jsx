@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { io } from "socket.io-client";
+import useSocket from "../../src/hooks/useSocket.js"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./InventoryAdmin.css";
 import loadingSpinner from "../../src/assets/images/loading-spinner.gif";
@@ -9,11 +9,10 @@ import ConfirmationDialog from "./ConfirmationDialog";
 
 // Function to calculate time ago
 const timeAgo = (date) => {
-  if (!date) return "Just now"; // Handle missing or invalid dates
-
+  if (!date) return "Just now";
   const now = new Date();
   const updated = new Date(date);
-  if (isNaN(updated)) return "Just now"; // Handle invalid date format
+  if (isNaN(updated)) return "Just now";
 
   const diffMs = now - updated;
   const diffMins = Math.floor(diffMs / (1000 * 60));
@@ -30,7 +29,6 @@ const timeAgo = (date) => {
 // Function to highlight search term
 const highlightSearchTerm = (text, searchTerm) => {
   if (!searchTerm) return text;
-
   const regex = new RegExp(`(${searchTerm})`, "gi");
   return text.split(regex).map((part, index) =>
     regex.test(part) ? (
@@ -42,9 +40,6 @@ const highlightSearchTerm = (text, searchTerm) => {
     )
   );
 };
-
-// WebSocket setup
-const socket = io("http://localhost:5050"); // Connect to the backend WebSocket server
 
 // Category mapping
 const categoryMap = {
@@ -65,177 +60,205 @@ const categoryMap = {
 };
 
 const AdminDashboard125 = () => {
-  const [medicines, setMedicines] = useState([]); // State to store medications
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const [showAddForm, setShowAddForm] = useState(false); // Toggle add form
-  const [editMedication, setEditMedication] = useState(null); // Medication being edited
+  const [medicines, setMedicines] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editMedication, setEditMedication] = useState(null);
   const [newMedication, setNewMedication] = useState({
     medication_name: "",
     availability: 1,
     dosage: "",
     dosage_unit: "",
-    category: 1, // Default to first category
-    pharma_id: 1, // Set pharma_id to 1 by default
+    category: 1,
+    pharma_id: 3, 
   });
-  const [searchText, setSearchText] = useState(""); // Search text
-  const [selectedCategory, setSelectedCategory] = useState(""); // Selected category filter
-  const [sortBy, setSortBy] = useState("recent"); // Default sort by "recent"
-  const [showConfirmation, setShowConfirmation] = useState(false); // Confirmation dialog state
-  const [medicationToDelete, setMedicationToDelete] = useState(null); // Medication to delete
-  const [message, setMessage] = useState({ type: "", text: "" }); // Success/error message
+  const [searchText, setSearchText] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [sortBy, setSortBy] = useState("recent");
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [medicationToDelete, setMedicationToDelete] = useState(null);
+  const [message, setMessage] = useState({ type: "", text: "" });
+
+  // Use the custom socket hook with pharma_id = 3
+  const socket = useSocket(3);
 
   // Fetch medications from the backend
   useEffect(() => {
-    const fetchMedications = async () => {
-      try {
-        const response = await fetch("http://localhost:5050/api/inventory125/medications");
-        if (!response.ok) throw new Error("Failed to fetch medications");
-        const { data } = await response.json(); // Destructure the `data` property
-        setMedicines(data); // Set the medications array
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+  // In AdminDashboard125.jsx - Update the fetchMedications function
+const fetchMedications = async () => {
+  try {
+    const token = localStorage.getItem('employee_token'); // Get stored token
+    const response = await fetch(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/api/inventory125/medications`,
+      {
+        headers: {
+          "Authorization": `Bearer ${token}` // Add this line
+        }
       }
-    };
-
-    fetchMedications(); // Call the function
+    );
+    if (!response.ok) throw new Error("Failed to fetch medications");
+    const { data } = await response.json();
+    setMedicines(data);
+  } catch (error) {
+    setError(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+    fetchMedications();
   }, []);
 
   // Listen for real-time updates
   useEffect(() => {
-    socket.on('medicationChanged', (data) => {
+    if (!socket) return;
+
+    const handleMedicationChange = (data) => {
+      // Only process updates for this pharmacy (pharma_id = 3)
+      if (data.pharma_id !== 3) return;
+
       if (data.action === 'delete') {
-        // Remove deleted medication
         setMedicines((prev) => prev.filter((med) => med.medication_id !== data.medication_id));
       } else {
-        // Update or add medication
         setMedicines((prev) => {
           const existingIndex = prev.findIndex((med) => med.medication_id === data.medication_id);
           if (existingIndex >= 0) {
-            // Update existing medication
             const updatedMedicines = [...prev];
             updatedMedicines[existingIndex] = data;
             return updatedMedicines;
           } else {
-            // Add new medication
             return [...prev, data];
           }
         });
       }
-    });
+    };
+
+    socket.on('medicationChanged', handleMedicationChange);
 
     return () => {
-      socket.off('medicationChanged'); // Clean up the listener
+      socket.off('medicationChanged', handleMedicationChange);
     };
-  }, []);
+  }, [socket]);
 
-  // Add a new medication
-  const handleAddMedication = async (e) => {
-    e.preventDefault();
-    try {
-      const medicationData = {
-        ...newMedication,
-        dosage: newMedication.dosage || null, // Set to null if empty
-        dosage_unit: newMedication.dosage_unit || null, // Set to null if empty
-      };
-
-      const response = await fetch("http://localhost:5050/api/inventory125/medications", {
+ 
+   // Add a new medication
+   const handleAddMedication = async (e) => {
+     e.preventDefault();
+     try {
+       const medicationData = {
+         ...newMedication,
+         dosage: newMedication.dosage || null, // Set to null if empty
+         dosage_unit: newMedication.dosage_unit || null, // Set to null if empty
+       };
+ 
+       const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/api/inventory125/medications`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem('employee_token')}`
+        },
         body: JSON.stringify(medicationData),
       });
-      if (!response.ok) throw new Error("Failed to add medication");
-      setShowAddForm(false);
-      setNewMedication({
-        medication_name: "",
-        availability: 1,
-        dosage: "",
-        dosage_unit: "",
-        category: 1,
-        pharma_id: 1,
-      }); // Reset form fields
-      setMessage({ type: "success", text: "Medication added successfully!" });
-      setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
-    } catch (error) {
-      console.error("Error adding medication:", error);
-      setMessage({ type: "error", text: "Failed to add medication. Please try again." });
-      setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
-    }
-  };
-
-  // Update a medication
-  const handleUpdateMedication = async (e) => {
-    e.preventDefault();
-    try {
-      const updatedMedication = {
-        ...editMedication,
-        dosage: editMedication.dosage || null, // Set to null if empty
-        dosage_unit: editMedication.dosage_unit || null, // Set to null if empty
-      };
-
-      const response = await fetch(
-        `http://localhost:5050/api/inventory125/medications/${editMedication.medication_id}`,
+       if (!response.ok) throw new Error("Failed to add medication");
+       setShowAddForm(false);
+       setNewMedication({
+         medication_name: "",
+         availability: 1,
+         dosage: "",
+         dosage_unit: "",
+         category: 1,
+         pharma_id: 3,
+       }); // Reset form fields
+       setMessage({ type: "success", text: "Medication added successfully!" });
+       setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
+     } catch (error) {
+       console.error("Error adding medication:", error);
+       setMessage({ type: "error", text: "Failed to add medication. Please try again." });
+       setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
+     }
+   };
+ 
+   // Update a medication
+   const handleUpdateMedication = async (e) => {
+     e.preventDefault();
+     try {
+       const updatedMedication = {
+         ...editMedication,
+         dosage: editMedication.dosage || null, // Set to null if empty
+         dosage_unit: editMedication.dosage_unit || null, // Set to null if empty
+       };
+ 
+       const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/inventory125/medications/${editMedication.medication_id}`,
         {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem('employee_token')}`
+          },
           body: JSON.stringify(updatedMedication),
         }
       );
-      if (!response.ok) throw new Error("Failed to update medication");
-      setEditMedication(null); // Close the edit form
-      setMessage({ type: "success", text: "Medication updated successfully!" });
-      setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
-    } catch (error) {
-      console.error("Error updating medication:", error);
-      setMessage({ type: "error", text: "Failed to update medication. Please try again." });
-      setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
-    }
-  };
-
-  // Delete a medication
-  const handleDeleteMedication = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:5050/api/inventory125/medications/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete medication");
-      setMedicines((prev) => prev.filter((med) => med.medication_id !== id)); // Update UI immediately
-      setMessage({ type: "success", text: "Medication deleted successfully!" });
-      setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
-    } catch (error) {
-      console.error("Error deleting medication:", error);
-      setMessage({ type: "error", text: "Failed to delete medication. Please try again." });
-      setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
-    }
-  };
-
-  // Filter and sort medications
-  const filteredMedicines = medicines.filter(
-    (medicine) =>
-      (!selectedCategory || medicine.category === parseInt(selectedCategory)) &&
-      (medicine.medication_name?.toLowerCase() || "").includes(searchText.toLowerCase())
-  );
-
-  const sortedMedicines = [...filteredMedicines].sort((a, b) => {
-    if (sortBy === "name") return a.medication_name.localeCompare(b.medication_name);
-    if (sortBy === "availability") return b.availability - a.availability;
-    if (sortBy === "recent") return new Date(b.availability_updated) - new Date(a.availability_updated);
-    return 0;
-  });
-
-  if (loading) {
-    return (
-      <div className="text-center py-5">
-        <img src={loadingSpinner} alt="Loading..." />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div className="text-center py-5 text-danger">Error: {error}</div>;
-  }
+       if (!response.ok) throw new Error("Failed to update medication");
+       setEditMedication(null); // Close the edit form
+       setMessage({ type: "success", text: "Medication updated successfully!" });
+       setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
+     } catch (error) {
+       console.error("Error updating medication:", error);
+       setMessage({ type: "error", text: "Failed to update medication. Please try again." });
+       setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
+     }
+   };
+ 
+   // Delete a medication
+   const handleDeleteMedication = async (id) => {
+     try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/inventory125/medications/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem('employee_token')}`
+          }
+        }
+      );
+       if (!response.ok) throw new Error("Failed to delete medication");
+       setMedicines((prev) => prev.filter((med) => med.medication_id !== id)); // Update UI immediately
+       setMessage({ type: "success", text: "Medication deleted successfully!" });
+       setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
+     } catch (error) {
+       console.error("Error deleting medication:", error);
+       setMessage({ type: "error", text: "Failed to delete medication. Please try again." });
+       setTimeout(() => setMessage({ type: "", text: "" }), 3000); // Hide message after 3 seconds
+     }
+   };
+ 
+   // Filter and sort medications
+   const filteredMedicines = medicines.filter(
+     (medicine) =>
+       (!selectedCategory || medicine.category === parseInt(selectedCategory)) &&
+       (medicine.medication_name?.toLowerCase() || "").includes(searchText.toLowerCase())
+   );
+ 
+   const sortedMedicines = [...filteredMedicines].sort((a, b) => {
+     if (sortBy === "name") return a.medication_name.localeCompare(b.medication_name);
+     if (sortBy === "availability") return b.availability - a.availability;
+     if (sortBy === "recent") return new Date(b.availability_updated) - new Date(a.availability_updated);
+     return 0;
+   });
+ 
+   if (loading) {
+     return (
+       <div className="text-center py-5">
+         <img src={loadingSpinner} alt="Loading..." />
+       </div>
+     );
+   }
+ 
+   if (error) {
+     return <div className="text-center py-5 text-danger">Error: {error}</div>;
+   }
+ 
 
   return (
     <div className="container">
@@ -504,8 +527,7 @@ const AdminDashboard125 = () => {
           onCancel={() => setShowConfirmation(false)}
         />
       )}
-    </div>
-  );
+    </div>  );
 };
 
 export default AdminDashboard125;

@@ -2,16 +2,16 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../Contexts/AuthContext";
 
 // eslint-disable-next-line react/prop-types
-const ManagerRoute = ({ children }) => {
-  const { isLoading, isLogged, isManager } = useAuth();
+const Pharmacy92Route = ({ children }) => {
+  const { isLoading, isLogged, isPharmacy92Admin } = useAuth();
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (!isLogged || !isManager) {
+  if (!isLogged || !isPharmacy92Admin) {
     return <Navigate to="/unauthorized" replace />;
   }
 
   return children;
 };
 
-export default ManagerRoute;
+export default Pharmacy92Route;
