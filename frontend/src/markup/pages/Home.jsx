@@ -1,3 +1,6 @@
+/* ዐhis is useles code right now but may be useful later 
+please dont delete it */
+
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./cards.css";
